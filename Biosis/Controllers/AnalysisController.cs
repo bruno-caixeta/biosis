@@ -8,7 +8,7 @@ namespace Biosis.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AnalysisController : ControllerBase
+    public class AnalysisController : Controller
     {
         // GET api/values
         [HttpGet]
@@ -26,10 +26,11 @@ namespace Biosis.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] AnalysisFileDTO analysisFileDTO)
+        public IActionResult Post([FromBody] AnalysisFileDTO analysisFileDTO)
         {
             AnalysisDataExtract dataExtract = new AnalysisDataExtract();
-            dataExtract.AnalysisFileProcess(analysisFileDTO.Base64);
+            dataExtract.ExtractValues(analysisFileDTO.Base64);
+            return Json(dataExtract);
         }
 
         // PUT api/values/5
