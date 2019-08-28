@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Biosis.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,21 +10,9 @@ namespace Biosis
 {
     public class AnalysisDataExtract
     {
-        public int class1 { get; set; }
-        public int class2 { get; set; }
-        public int class3 { get; set; }
-        public int class4 { get; set; }
-        public int class5 { get; set; }
-        public int class6 { get; set; }
-        public int class7 { get; set; }
-        public int class8 { get; set; }
-        public int class9 { get; set; }
-        public int class10 { get; set; }
 
-        public int msp { get; set; }
-        public int msg { get; set; }
-        public int mg { get; set; }
-        public int total { get; set; }
+        DadosTrans dadosTrans = new DadosTrans();
+        
         public void ExtractValues(string file)
         {
             var data = Convert.FromBase64String(file);
@@ -77,18 +66,18 @@ namespace Biosis
             {                
                 if (sector.Identifier <= 2 && sector.PostTrace == 0 || sector.Identifier == 0 && sector.PostTrace <= 2)
                 {
-                    msp += 1;
+                    dadosTrans.MSP += 1;
                 }
                 else if (sector.Identifier == 0 && sector.PostTrace > 2 || sector.Identifier > 2 && sector.PostTrace == 0)
                 {
-                    msg += 1;
+                    dadosTrans.MSG += 1;
                 }
                 else //if(int.Parse(identifier) > 0 && int.Parse(postTrace) > 0)
                 {
-                    mg += 1;
+                    dadosTrans.MG += 1;
                 }
             }
-            total = msp + msg + mg;
+            dadosTrans.TotalManchas = dadosTrans.MSP + dadosTrans.MSG + dadosTrans.MG;
         }
 
         public void ClassifyByAlterationType(List<Sector> sectors)
@@ -97,43 +86,43 @@ namespace Biosis
             {
                 if (sector.Identifier == 1)
                 {
-                    class1 += 1;
+                    dadosTrans.Class1 += 1;
                 }
                 else if (sector.Identifier == 2)
                 {
-                    class2 += 1;
+                    dadosTrans.Class2 += 1;
                 }
                 else if (sector.Identifier > 2 && sector.Identifier <= 4)
                 {
-                    class3 += 1;
+                    dadosTrans.Class3 += 1;
                 }
                 else if (sector.Identifier > 4 && sector.Identifier <= 8)
                 {
-                    class4 += 1;
+                    dadosTrans.Class4 += 1;
                 }
                 else if (sector.Identifier > 8 && sector.Identifier <= 16)
                 {
-                    class5 += 1;
+                    dadosTrans.Class5 += 1;
                 }
                 else if (sector.Identifier > 16 && sector.Identifier <= 32)
                 {
-                    class6 += 1;
+                    dadosTrans.Class6 += 1;
                 }
                 else if (sector.Identifier > 32 && sector.Identifier <= 64)
                 {
-                    class7 += 1;
+                    dadosTrans.Class7 += 1;
                 }
                 else if (sector.Identifier > 64 && sector.Identifier <= 128)
                 {
-                    class8 += 1;
+                    dadosTrans.Class8 += 1;
                 }
                 else if (sector.Identifier > 128 && sector.Identifier <= 256)
                 {
-                    class9 += 1;
+                    dadosTrans.Class9 += 1;
                 }
                 else if (sector.Identifier > 256)
                 {
-                    class10 += 1;
+                    dadosTrans.Class10 += 1;
                 }
             }
         }
