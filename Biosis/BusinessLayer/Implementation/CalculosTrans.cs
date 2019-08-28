@@ -9,12 +9,12 @@ namespace Biosis.BusinessLayer.Implementation
 {
     public class CalculosTrans
     {
-        DadosTrans controle = new DadosTrans();        
-        public CalculosTrans(DadosTrans dadosTransControle)
+        TransData controle = new TransData();        
+        public CalculosTrans(TransData dadosTransControle)
         {
             controle = dadosTransControle;
         }
-        public string CalcularMSPTrans(DadosTrans dadoTrans)
+        public string CalcularMSPTrans(TransData dadoTrans)
         {
             var HoP = dadoTrans.NumeroIndividuos / dadoTrans.NumeroIndividuos + controle.NumeroIndividuos;
             var HaP = 2*dadoTrans.NumeroIndividuos / 2*dadoTrans.NumeroIndividuos + controle.NumeroIndividuos;
@@ -49,7 +49,7 @@ namespace Biosis.BusinessLayer.Implementation
 
         }
 
-        public string CalcularMSGTrans(DadosTrans dadoTrans)
+        public string CalcularMSGTrans(TransData dadoTrans)
         {
             var HoP = dadoTrans.NumeroIndividuos / dadoTrans.NumeroIndividuos + controle.NumeroIndividuos;
             var HaP = 2 * dadoTrans.NumeroIndividuos / 2 * dadoTrans.NumeroIndividuos + controle.NumeroIndividuos;
@@ -84,7 +84,7 @@ namespace Biosis.BusinessLayer.Implementation
 
         }
 
-        public string CalcularMGTrans(DadosTrans dadoTrans)
+        public string CalcularMGTrans(TransData dadoTrans)
         {
             var HoP = dadoTrans.NumeroIndividuos / dadoTrans.NumeroIndividuos + controle.NumeroIndividuos;
             var HaP = 2 * dadoTrans.NumeroIndividuos / 2 * dadoTrans.NumeroIndividuos + controle.NumeroIndividuos;
@@ -119,7 +119,7 @@ namespace Biosis.BusinessLayer.Implementation
 
         }
 
-        public string CalcularTotalTrans(DadosTrans dadoTrans)
+        public string CalcularTotalTrans(TransData dadoTrans)
         {
             var HoP = dadoTrans.NumeroIndividuos / dadoTrans.NumeroIndividuos + controle.NumeroIndividuos;
             var HaP = 2 * dadoTrans.NumeroIndividuos / 2 * dadoTrans.NumeroIndividuos + controle.NumeroIndividuos;

@@ -1,14 +1,18 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Biosis.Model
 {
-    public class DadosTrans
+    public class TransData
     {
-        public Guid ResearchDataId { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid TransDataId { get; set; }
         public string Composto { get; set; }
         public string Cruzamento { get; set; }
         public string Dose { get; set; }
@@ -31,6 +35,7 @@ namespace Biosis.Model
         public int Class10 { get; set; }
         public Guid ResearchId { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("ResearchId")]
         public virtual Research Research { get; set; }
     }

@@ -7,7 +7,7 @@ namespace Biosis.Model
 {
     public class TabelaFinal
     {
-        public DadosTrans dadosTrans { get; set; }
+        public TransData dadosTrans { get; set; }
         public int UmaADuasCelulas { get; set; }
         public int MaisQueDuasCelulas { get; set; }
     }
