@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Biosis.DataObject;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,12 +12,26 @@ namespace Biosis.Model
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid ResearchId { get; set; }        
+        public Guid ResearchId { get; set; } 
+        public string Description { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime LastUpdate { get; set; }
         public Guid UserId { get; set; }
         
         public List<TransData> TransData { get; set; }
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
+
+        public Research()
+        {
+
+        }
+
+        public Research(ResearchDTO researchDTO)
+        {
+            Description = researchDTO.Description;
+            UserId = researchDTO.UserId;        
+        }
 
     }
 }

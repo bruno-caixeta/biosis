@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Biosis.DataObject;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,5 +17,17 @@ namespace Biosis.Model
         public string Login { get; set; }
         public string Password { get; set; }
         public List<Research> Researches { get; set; }
+
+        public User()
+        {
+
+        }
+
+        public User(UserDTO userDTO)
+        {
+            Name = userDTO.Name;
+            Login = userDTO.Login;
+            Password = userDTO.Password;
+        }
     }
 }

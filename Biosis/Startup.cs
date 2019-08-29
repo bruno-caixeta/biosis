@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Biosis.BusinessLayer.Interface;
 using Biosis.Model;
+using Biosis.Model.Repository.Implementation;
+using Biosis.Model.Repository.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +37,10 @@ namespace Biosis
                         .AllowAnyMethod());
             });
             services.AddDbContext<DataContext>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IResearchRepository, ResearchRepository>();
+            services.AddScoped<ITransDataRepository, TransDataRepository>();
+            services.AddScoped<IAnalysisDataExtract, AnalysisDataExtract>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

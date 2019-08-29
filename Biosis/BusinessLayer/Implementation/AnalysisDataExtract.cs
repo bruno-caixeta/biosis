@@ -1,4 +1,6 @@
-﻿using Biosis.Model;
+﻿using Biosis.BusinessLayer.Interface;
+using Biosis.Model;
+using Biosis.Model.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,12 +10,17 @@ using System.Threading.Tasks;
 
 namespace Biosis
 {
-    public class AnalysisDataExtract
+    public class AnalysisDataExtract: IAnalysisDataExtract
     {
-
+        private readonly ITransDataRepository _transDataRepository;
         TransData transData = new TransData();
+
+        public AnalysisDataExtract(ITransDataRepository transDataRepository)
+        {
+            _transDataRepository = transDataRepository;
+        }
         
-        public void ExtractValues(string file)
+        public TransData ExtractValues(string file)
         {
             var data = Convert.FromBase64String(file);
             File.WriteAllBytes("../AnalysisFile.txt", data);
@@ -57,7 +64,7 @@ namespace Biosis
 
             ClassifyBySize(sectorsData);
             ClassifyByAlterationType(sectorsData);
-
+            return _transDataRepository.Insert(transData);
         }
 
         public void ClassifyBySize(List<Sector> sectors)
