@@ -24,5 +24,10 @@ namespace Biosis.BusinessLayer.Implementation
             research.CreatedDate = DateTime.Now;
             return _researchRepository.Insert(research);
         }
+
+        public Research GetResearch(Guid researchId)
+        {
+            return _researchRepository.GetOne(researchId);
+        }
     }
 }

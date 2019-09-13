@@ -29,8 +29,8 @@ namespace Biosis.Controllers
                     return BadRequest();
                 }
 
-                _researchBusinessLayer.CreateResearch(researchDTO);
-                return Ok();
+                var research = _researchBusinessLayer.CreateResearch(researchDTO);
+                return Json(research);
 
             }
             catch (Exception ex)

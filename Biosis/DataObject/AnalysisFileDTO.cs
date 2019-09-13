@@ -12,5 +12,6 @@ namespace Biosis
         public string Dose { get; set; }
         public string Cruzamento { get; set; }
         public bool IsControle { get; set; }
+        public Guid ResearchId { get; set; }
     }
 }

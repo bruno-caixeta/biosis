@@ -10,5 +10,6 @@ namespace Biosis.BusinessLayer.Interface
     public interface IResearchBusinessLayer
     {
         Research CreateResearch(ResearchDTO researchDTO);
+        Research GetResearch(Guid researchId);
     }
 }

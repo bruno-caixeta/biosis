@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Biosis.BusinessLayer.Implementation;
 using Biosis.BusinessLayer.Interface;
 using Biosis.Model;
 using Biosis.Model.Repository.Implementation;
@@ -39,8 +40,11 @@ namespace Biosis
             services.AddDbContext<DataContext>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IResearchRepository, ResearchRepository>();
+            services.AddScoped<IResearchBusinessLayer, ResearchBusinessLayer>();
             services.AddScoped<ITransDataRepository, TransDataRepository>();
             services.AddScoped<IAnalysisDataExtract, AnalysisDataExtract>();
+            services.AddScoped<ITransCalculations, TransCalculations>();
+            services.AddScoped<ITransDataBusinessLayer, TransDataBusinessLayer>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

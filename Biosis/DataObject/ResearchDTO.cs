@@ -8,6 +8,7 @@ namespace Biosis.DataObject
     public class ResearchDTO
     {
         public string Description { get; set; }
+        public Guid ControlId { get; set; }
         public Guid UserId { get; set; }
     }
 }

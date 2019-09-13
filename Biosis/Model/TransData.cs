@@ -33,7 +33,7 @@ namespace Biosis.Model
         public int Class8 { get; set; }
         public int Class9 { get; set; }
         public int Class10 { get; set; }
-        public Guid ResearchId { get; set; }
+        public Guid? ResearchId { get; set; }
 
         [JsonIgnore]
         [ForeignKey("ResearchId")]

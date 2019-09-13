@@ -3,15 +3,17 @@ using System;
 using Biosis.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Biosis.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190910124711_V2_AddField")]
+    partial class V2_AddField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,8 +26,6 @@ namespace Biosis.Migrations
                 {
                     b.Property<Guid>("ResearchId")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("ControlId");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -85,7 +85,7 @@ namespace Biosis.Migrations
 
                     b.Property<int>("NumeroIndividuos");
 
-                    b.Property<Guid?>("ResearchId");
+                    b.Property<Guid>("ResearchId");
 
                     b.Property<int>("TotalManchas");
 

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Biosis.BusinessLayer.Interface
 {
-    public interface IAnalysisDataExtract
+    public interface ITransDataBusinessLayer
     {
-        TransData ExtractValues(AnalysisFileDTO file);
+        TransData GetTransData(Guid transDataId);
     }
 }

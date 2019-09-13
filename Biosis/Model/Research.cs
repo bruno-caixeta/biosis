@@ -16,6 +16,7 @@ namespace Biosis.Model
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime LastUpdate { get; set; }
+        public Guid ControlId { get; set; }
         public Guid UserId { get; set; }
         
         public List<TransData> TransData { get; set; }
@@ -30,7 +31,8 @@ namespace Biosis.Model
         public Research(ResearchDTO researchDTO)
         {
             Description = researchDTO.Description;
-            UserId = researchDTO.UserId;        
+            UserId = researchDTO.UserId;
+            ControlId = researchDTO.ControlId;
         }
 
     }
