@@ -52,7 +52,7 @@ namespace Biosis.Controllers
         {
             try
             {
-                var research = _researchBusinessLayer.GetResearch(researchId);
+                var research = _researchBusinessLayer.GetFullResearch(researchId);
                 if (research == null)
                 {
                     return NotFound("Pesquisa não encontrada");
@@ -62,7 +62,7 @@ namespace Biosis.Controllers
                 {
                     return NotFound("Dados de controle não encontrados");
                 }
-                var memoryStream = _transCalculations.GeneratePdfReport(controle);
+                var memoryStream = _transCalculations.GeneratePdfReport(controle, research);
                 return File(memoryStream.ToArray(), "application/octet-stream", "research.pdf");
             }
             catch (Exception ex)

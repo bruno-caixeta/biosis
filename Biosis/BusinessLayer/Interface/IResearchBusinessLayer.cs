@@ -11,5 +11,6 @@ namespace Biosis.BusinessLayer.Interface
     {
         Research CreateResearch(ResearchDTO researchDTO);
         Research GetResearch(Guid researchId);
+        Research GetFullResearch(Guid researchId);
     }
 }

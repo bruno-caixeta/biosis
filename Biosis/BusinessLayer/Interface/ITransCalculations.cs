@@ -9,6 +9,6 @@ namespace Biosis.BusinessLayer.Interface
 {
     public interface ITransCalculations
     {
-        MemoryStream GeneratePdfReport(TransData controle);
+        MemoryStream GeneratePdfReport(TransData controle, Research research);
     }
 }

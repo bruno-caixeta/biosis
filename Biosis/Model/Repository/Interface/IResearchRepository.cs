@@ -7,5 +7,6 @@ namespace Biosis.Model.Repository.Interface
 {
     public interface IResearchRepository:IGenericRepository<Research>
     {
+        Research GetFullResearch(Guid researchId);
     }
 }
