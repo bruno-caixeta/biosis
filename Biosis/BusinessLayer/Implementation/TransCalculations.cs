@@ -16,6 +16,8 @@ namespace Biosis.BusinessLayer.Implementation
         private readonly ITransDataBusinessLayer _transDataBusinessLayer;
 
         TransData controle = new TransData();
+        Document document = new Document();
+
         public TransCalculations(ITransDataBusinessLayer transDataBusinessLayer)
         {
             _transDataBusinessLayer = transDataBusinessLayer;
@@ -163,7 +165,7 @@ namespace Biosis.BusinessLayer.Implementation
         public MemoryStream GeneratePdfReport(TransData controle, Research research)
         {
             this.controle = controle;
-            Document document = new Document(PageSize.A4.Rotate());
+            document = new Document(PageSize.A4.Rotate());
             document.SetMargins(3, 2, 3, 2);
             MemoryStream memoryStream = new MemoryStream();
             PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
@@ -226,7 +228,45 @@ namespace Biosis.BusinessLayer.Implementation
             table.AddCell(headerCell6);
             table.AddCell(headerCell8);
 
-            foreach(var item in research.TransData)
+            var itemCompostoControleCell = new PdfPCell(new Paragraph(controle.Composto, fontText));
+            itemCompostoControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            table.AddCell(itemCompostoControleCell);
+
+            var itemIndividuosControleCell = new PdfPCell(new Paragraph(Convert.ToString(controle.NumeroIndividuos), fontText));
+            itemIndividuosControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            table.AddCell(itemIndividuosControleCell);
+
+            var itemMSPProportionControleCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(controle.MSP) / Convert.ToDouble(controle.NumeroIndividuos), 2)), fontText));
+            itemMSPProportionControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            table.AddCell(itemMSPProportionControleCell);
+
+            var itemMSPNumberControleCell = new PdfPCell(new Paragraph(Convert.ToString(controle.MSP), fontText));
+            itemMSPNumberControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            table.AddCell(itemMSPNumberControleCell);
+
+            table.AddCell("");
+
+            var itemMSGProportionControleCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(controle.MSG) / Convert.ToDouble(controle.NumeroIndividuos), 2)), fontText));
+            itemMSGProportionControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            table.AddCell(itemMSGProportionControleCell);
+
+            var itemMSGNumberControleCell = new PdfPCell(new Paragraph(Convert.ToString(controle.MSG), fontText));
+            itemMSGNumberControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            table.AddCell(itemMSGNumberControleCell);
+
+            table.AddCell("");
+
+            var itemMGProportionControleCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(controle.MG) / Convert.ToDouble(controle.NumeroIndividuos), 2)), fontText));
+            itemMGProportionControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            table.AddCell(itemMGProportionControleCell);
+
+            var itemMGNumberControleCell = new PdfPCell(new Paragraph(Convert.ToString(controle.MG), fontText));
+            itemMGNumberControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            table.AddCell(itemMGNumberControleCell);
+
+            table.CompleteRow();
+
+            foreach (var item in research.TransData)
             {
                 var itemCompostoCell = new PdfPCell(new Paragraph(item.Composto, fontText));
                 itemCompostoCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
@@ -234,27 +274,27 @@ namespace Biosis.BusinessLayer.Implementation
 
                 var itemIndividuosCell = new PdfPCell(new Paragraph(Convert.ToString(item.NumeroIndividuos), fontText));
                 itemIndividuosCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
-                table.AddCell(itemIndividuosCell);
+                table.AddCell(itemIndividuosCell);                
 
-                var itemMSPProportionCell = new PdfPCell(new Paragraph(Convert.ToString(Convert.ToDouble(item.MSP)/Convert.ToDouble(item.NumeroIndividuos)), fontText));
+                var itemMSPProportionCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(item.MSP)/Convert.ToDouble(item.NumeroIndividuos), 2)), fontText));
                 itemMSPProportionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemMSPProportionCell);
 
                 var itemMSPNumberCell = new PdfPCell(new Paragraph(Convert.ToString(item.MSP), fontText));
-                itemMSPProportionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
-                table.AddCell(itemMSPProportionCell);
+                itemMSPNumberCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                table.AddCell(itemMSPNumberCell);
 
                 var itemDiagnosticoMSPCell = new PdfPCell(new Paragraph(CalcularMSPTrans(item)));
                 itemDiagnosticoMSPCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemDiagnosticoMSPCell);                
 
-                var itemMSGProportionCell = new PdfPCell(new Paragraph(Convert.ToString(Convert.ToDouble(item.MSG) / Convert.ToDouble(item.NumeroIndividuos)), fontText));
-                itemMSPProportionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
-                table.AddCell(itemMSPProportionCell);
+                var itemMSGProportionCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(item.MSG) / Convert.ToDouble(item.NumeroIndividuos), 2)), fontText));
+                itemMSGProportionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                table.AddCell(itemMSGProportionCell);
 
                 var itemMSGNumberCell = new PdfPCell(new Paragraph(Convert.ToString(item.MSG), fontText));
-                itemMSPProportionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
-                table.AddCell(itemMSPProportionCell);
+                itemMSGNumberCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                table.AddCell(itemMSGNumberCell);
 
                 var itemDiagnosticoMSGCell = new PdfPCell(new Paragraph(CalcularMSGTrans(item)));
                 itemDiagnosticoMSGCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
