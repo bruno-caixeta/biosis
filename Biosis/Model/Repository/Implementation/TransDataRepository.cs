@@ -8,5 +8,13 @@ namespace Biosis.Model.Repository.Implementation
 {
     public class TransDataRepository: GenericRepository<TransData>, ITransDataRepository
     {
+        public List<TransData> GetControls()
+        {
+            using(var context = new DataContext())
+            {
+                var controls = context.TransData.Where(td => td.IsControle == true).ToList();
+                return controls;
+            }
+        }
     }
 }

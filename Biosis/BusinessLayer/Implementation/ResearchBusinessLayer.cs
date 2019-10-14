@@ -30,6 +30,11 @@ namespace Biosis.BusinessLayer.Implementation
             return _researchRepository.GetOne(researchId);
         }
 
+        public List<Research> GetAllResearches()
+        {
+            return _researchRepository.GetAll();
+        }
+
         public Research GetFullResearch(Guid researchId)
         {
             return _researchRepository.GetFullResearch(researchId);

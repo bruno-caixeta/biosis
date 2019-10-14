@@ -9,5 +9,6 @@ namespace Biosis.BusinessLayer.Interface
     public interface ITransDataBusinessLayer
     {
         TransData GetTransData(Guid transDataId);
+        List<TransData> GetControls();
     }
 }

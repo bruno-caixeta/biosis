@@ -42,5 +42,24 @@ namespace Biosis.Controllers
                 return StatusCode(500, new { Error = ex.Message });
             }
         }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            try
+            {
+                var researches = _researchBusinessLayer.GetAllResearches();
+                return Json(researches);
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null)
+                {
+                    return StatusCode(500, new { Error = ex.Message, InnerException = ex.InnerException.Message });
+                }
+                return StatusCode(500, new { Error = ex.Message });
+            }
+        }
     }
 }

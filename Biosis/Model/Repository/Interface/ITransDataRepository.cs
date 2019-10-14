@@ -7,6 +7,6 @@ namespace Biosis.Model.Repository.Interface
 {
     public interface ITransDataRepository: IGenericRepository<TransData>
     {
-
+        List<TransData> GetControls();
     }
 }

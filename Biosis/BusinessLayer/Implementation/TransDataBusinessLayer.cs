@@ -19,5 +19,10 @@ namespace Biosis.BusinessLayer.Implementation
         {
             return _transDataRepository.GetOne(transDataId);                                    
         }
+
+        public List<TransData> GetControls()
+        {
+            return _transDataRepository.GetControls();
+        }
     }
 }
