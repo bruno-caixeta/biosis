@@ -94,8 +94,8 @@ namespace Biosis.BusinessLayer.Implementation
 
         public string CalcularMGTrans(TransData dadoTrans)
         {
-            var HoP = dadoTrans.NumeroIndividuos / dadoTrans.NumeroIndividuos + controle.NumeroIndividuos;
-            var HaP = 2 * dadoTrans.NumeroIndividuos / 2 * dadoTrans.NumeroIndividuos + controle.NumeroIndividuos;
+            var HoP = Convert.ToDouble(dadoTrans.NumeroIndividuos) / (Convert.ToDouble(dadoTrans.NumeroIndividuos) + Convert.ToDouble(controle.NumeroIndividuos));
+            var HaP = 2 * Convert.ToDouble(dadoTrans.NumeroIndividuos) / (2 * Convert.ToDouble(dadoTrans.NumeroIndividuos) + Convert.ToDouble(controle.NumeroIndividuos));
 
             var HoProb = 1 - Binomial.CDF(HoP, dadoTrans.MG + controle.MG, dadoTrans.MG) + Binomial.PMF(HoP, dadoTrans.MG + controle.MG, dadoTrans.MG);
 
@@ -129,8 +129,8 @@ namespace Biosis.BusinessLayer.Implementation
 
         public string CalcularTotalTrans(TransData dadoTrans)
         {
-            var HoP = dadoTrans.NumeroIndividuos / dadoTrans.NumeroIndividuos + controle.NumeroIndividuos;
-            var HaP = 2 * dadoTrans.NumeroIndividuos / 2 * dadoTrans.NumeroIndividuos + controle.NumeroIndividuos;
+            var HoP = Convert.ToDouble(dadoTrans.NumeroIndividuos) / (Convert.ToDouble(dadoTrans.NumeroIndividuos) + Convert.ToDouble(controle.NumeroIndividuos));
+            var HaP = 2 * Convert.ToDouble(dadoTrans.NumeroIndividuos) / (2 * Convert.ToDouble(dadoTrans.NumeroIndividuos) + Convert.ToDouble(controle.NumeroIndividuos));
 
             var HoProb = 1 - Binomial.CDF(HoP, dadoTrans.TotalManchas + controle.TotalManchas, dadoTrans.TotalManchas) + Binomial.PMF(HoP, dadoTrans.TotalManchas + controle.TotalManchas, dadoTrans.TotalManchas);
 
@@ -165,6 +165,7 @@ namespace Biosis.BusinessLayer.Implementation
         public MemoryStream GeneratePdfReport(TransData controle, Research research)
         {
             this.controle = controle;
+            var composto = "";
             document = new Document(PageSize.A4.Rotate());
             document.SetMargins(3, 2, 3, 2);
             MemoryStream memoryStream = new MemoryStream();
@@ -174,6 +175,7 @@ namespace Biosis.BusinessLayer.Implementation
             table.WidthPercentage = 90;
             Font fontHeader = FontFactory.GetFont(BaseFont.TIMES_ROMAN, 18);
             Font fontText = FontFactory.GetFont(BaseFont.TIMES_ROMAN, 12);
+            Font fontItalic = FontFactory.GetFont(BaseFont.TIMES_ROMAN, 12, Font.ITALIC);
 
             Paragraph column1 = new Paragraph("(mM)", fontHeader);
             Paragraph column2 = new Paragraph("( N )", fontHeader);
@@ -188,29 +190,76 @@ namespace Biosis.BusinessLayer.Implementation
 
             var headerCell1 = new PdfPCell(column1);
             headerCell1.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+
             var headerCell2 = new PdfPCell(column2);
             headerCell2.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+
             var headerCell3 = new PdfPCell(column3);
             headerCell3.Colspan = 3;
             headerCell3.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+
             var headerCell4 = new PdfPCell(column4);
             headerCell4.Colspan = 3;
             headerCell4.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+
             var headerCellempty = new PdfPCell(emptyParagraph);
             headerCellempty.Colspan = 3;
             headerCellempty.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+
             var headerCell5 = new PdfPCell(column5);
             headerCell5.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+
             var headerCellempty2 = new PdfPCell(emptyParagraph);
             headerCellempty2.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+
             var headerCell6 = new PdfPCell(m2);
             headerCell6.Colspan = 3;
             headerCell6.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+
             var headerCell7 = new PdfPCell(m5);
             headerCell7.Colspan = 3;
             headerCell7.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+
             var headerCell8 = new PdfPCell(n);
             headerCell8.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+
+            var headerExplanation = new Paragraph("Manchas por indivíduo ( no. de manchas ) diag. estatístico");
+            var headerExplanationCell = new PdfPCell(headerExplanation);
+            headerExplanationCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            headerExplanationCell.Colspan = 12;
+
+            var msp = new Paragraph("MSP");
+            var mspCell = new PdfPCell(msp);
+            mspCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            mspCell.Colspan = 3;
+
+            var msg = new Paragraph("MSG");
+            var msgCell = new PdfPCell(msg);
+            msgCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            msgCell.Colspan = 3;
+
+            var mg = new Paragraph("MG");
+            var mgCell = new PdfPCell(mg);
+            mgCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            mgCell.Colspan = 3;
+
+            var tm = new Paragraph("TM");
+            var tmCell = new PdfPCell(tm);
+            tmCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            tmCell.Colspan = 3;
+
+            table.AddCell("Genótipos");
+            table.AddCell("N. de");
+            table.AddCell(headerExplanationCell);
+            table.AddCell("Total");
+
+            table.AddCell("e Conc.");
+            table.AddCell("Indiv.");
+            table.AddCell(mspCell);
+            table.AddCell(msgCell);
+            table.AddCell(mgCell);
+            table.AddCell(tmCell);
+            table.AddCell("manchas");
 
             table.AddCell(headerCell1);
             table.AddCell(headerCell2);
@@ -227,6 +276,12 @@ namespace Biosis.BusinessLayer.Implementation
             table.AddCell(headerCell7);
             table.AddCell(headerCell6);
             table.AddCell(headerCell8);
+
+            var flairCell = new PdfPCell(new Paragraph("mwh/flr³", fontItalic));
+            flairCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            table.AddCell(flairCell);
+
+            table.CompleteRow();
 
             var itemCompostoControleCell = new PdfPCell(new Paragraph(controle.Composto, fontText));
             itemCompostoControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
@@ -264,10 +319,22 @@ namespace Biosis.BusinessLayer.Implementation
             itemMGNumberControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             table.AddCell(itemMGNumberControleCell);
 
+            table.AddCell("");
+
+            var itemTotalProportionControleCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(controle.TotalManchas) / Convert.ToDouble(controle.NumeroIndividuos), 2)), fontText));
+            itemTotalProportionControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            table.AddCell(itemTotalProportionControleCell);
+
+            var itemTotalNumberControleCell = new PdfPCell(new Paragraph(Convert.ToString(controle.TotalManchas), fontText));
+            itemTotalNumberControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            table.AddCell(itemTotalNumberControleCell);
+
             table.CompleteRow();
 
             foreach (var item in research.TransData)
             {
+                composto = item.Composto;
+
                 var itemCompostoCell = new PdfPCell(new Paragraph(item.Composto, fontText));
                 itemCompostoCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemCompostoCell);
@@ -299,8 +366,35 @@ namespace Biosis.BusinessLayer.Implementation
                 var itemDiagnosticoMSGCell = new PdfPCell(new Paragraph(CalcularMSGTrans(item)));
                 itemDiagnosticoMSGCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemDiagnosticoMSGCell);
+
+                var itemMGProportionCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(item.MG) / Convert.ToDouble(item.NumeroIndividuos), 2)), fontText));
+                itemMGProportionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                table.AddCell(itemMGProportionCell);
+
+                var itemMGNumberCell = new PdfPCell(new Paragraph(Convert.ToString(item.MG), fontText));
+                itemMGNumberCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                table.AddCell(itemMGNumberCell);
+
+                var itemDiagnosticoMGCell = new PdfPCell(new Paragraph(CalcularMGTrans(item)));
+                itemDiagnosticoMGCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                table.AddCell(itemDiagnosticoMGCell);
+
+                var itemTotalProportionCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(item.TotalManchas) / Convert.ToDouble(item.NumeroIndividuos), 2)), fontText));
+                itemTotalProportionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                table.AddCell(itemTotalProportionCell);
+
+                var itemTotalNumberCell = new PdfPCell(new Paragraph(Convert.ToString(item.TotalManchas), fontText));
+                itemTotalNumberCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                table.AddCell(itemTotalNumberCell);
+
+                var itemDiagnosticoTotalCell = new PdfPCell(new Paragraph(CalcularTotalTrans(item)));
+                itemDiagnosticoTotalCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                table.AddCell(itemDiagnosticoTotalCell);
+
                 table.CompleteRow();
             }
+
+            document.Add(new Paragraph("Frequência de manchas mutantes observadas nos descendentes trans-heterozigotos de Drosophila melanogaster, do cruzamento padrão, tratados com diferentes concentrações de " + composto + ".\n\n"));
 
             document.Add(table);
             document.Close();
