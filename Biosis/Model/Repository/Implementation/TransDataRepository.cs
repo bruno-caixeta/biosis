@@ -12,7 +12,7 @@ namespace Biosis.Model.Repository.Implementation
         {
             using(var context = new DataContext())
             {
-                var controls = context.TransData.Where(td => td.IsControle == true).ToList();
+                var controls = context.TransData.Where(td => td.IsControl == true).ToList();
                 return controls;
             }
         }

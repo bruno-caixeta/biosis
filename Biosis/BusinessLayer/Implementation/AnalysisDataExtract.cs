@@ -23,14 +23,15 @@ namespace Biosis
         
         public TransData ExtractValues(AnalysisFileDTO file)
         {
-            transData.IsControle = file.IsControle;
+            transData.IsControl = file.IsControl;
             transData.ResearchId = file.ResearchId;
-            transData.Composto = file.Composto;
-            transData.Cruzamento = file.Cruzamento;
+            transData.Compound = file.Compound;
+            transData.Breed = file.Breed;
             transData.Dose = file.Dose;
             var data = Convert.FromBase64String(file.Base64);
             File.WriteAllBytes("../AnalysisFile.txt", data);
             var lines = File.ReadAllLines("../AnalysisFile.txt");
+            var population = 0;
 
             List<Sector> sectorsData = new List<Sector>();
 
@@ -65,8 +66,11 @@ namespace Biosis
                         sectorData.PostTrace = int.Parse(postTrace);
                         sectorsData.Add(sectorData);
                     }
+                    population = population + 1;
                 }
+                
             }
+            transData.PopulationNumber = population/2;
 
             ClassifyBySize(sectorsData);
             ClassifyByAlterationType(sectorsData);
@@ -95,7 +99,7 @@ namespace Biosis
                     transData.MG += 1;
                 }
             }
-            transData.TotalManchas = transData.MSP + transData.MSG + transData.MG;
+            transData.TaintTotal = transData.MSP + transData.MSG + transData.MG;
         }
 
         public void ClassifyByAlterationType(List<Sector> sectors)

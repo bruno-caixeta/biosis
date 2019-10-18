@@ -13,16 +13,16 @@ namespace Biosis.Model
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid TransDataId { get; set; }
-        public string Composto { get; set; }
-        public string Cruzamento { get; set; }
+        public string Compound { get; set; }
+        public string Breed { get; set; }
         public string Dose { get; set; }
-        public int NumeroIndividuos { get; set; }
+        public int PopulationNumber { get; set; }
         public int MSG { get; set; }
         public int MSP { get; set; }
         public int MG { get; set; }
-        public int TotalManchas { get; set; }
-        public bool IsControle { get; set; }
-        public string DiagnosticoEstatistico { get; set; }
+        public int TaintTotal { get; set; }
+        public bool IsControl { get; set; }
+        public string StatisticDiagnose { get; set; }
         public int Class1 { get; set; }
         public int Class2 { get; set; }
         public int Class3 { get; set; }

@@ -14,6 +14,7 @@ namespace Biosis.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid ResearchId { get; set; } 
         public string Description { get; set; }
+        public string Compound { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime LastUpdate { get; set; }
         public Guid ControlId { get; set; }
@@ -33,6 +34,7 @@ namespace Biosis.Model
             Description = researchDTO.Description;
             UserId = researchDTO.UserId;
             ControlId = researchDTO.ControlId;
+            Compound = researchDTO.Compound;
         }
 
     }

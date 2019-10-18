@@ -24,8 +24,8 @@ namespace Biosis.BusinessLayer.Implementation
         }
         public string CalcularMSPTrans(TransData dadoTrans)
         {
-            double HoP = Convert.ToDouble(dadoTrans.NumeroIndividuos) / (Convert.ToDouble(dadoTrans.NumeroIndividuos) + Convert.ToDouble(controle.NumeroIndividuos));
-            double HaP = 2*Convert.ToDouble(dadoTrans.NumeroIndividuos) / (2*Convert.ToDouble(dadoTrans.NumeroIndividuos) + Convert.ToDouble(controle.NumeroIndividuos));
+            double HoP = Convert.ToDouble(dadoTrans.PopulationNumber) / (Convert.ToDouble(dadoTrans.PopulationNumber) + Convert.ToDouble(controle.PopulationNumber));
+            double HaP = 2*Convert.ToDouble(dadoTrans.PopulationNumber) / (2*Convert.ToDouble(dadoTrans.PopulationNumber) + Convert.ToDouble(controle.PopulationNumber));
 
             var HoProb = 1 - Binomial.CDF(HoP, dadoTrans.MSP + controle.MSP, dadoTrans.MSP) + Binomial.PMF(HoP, dadoTrans.MSP + controle.MSP, dadoTrans.MSP);
 
@@ -59,8 +59,8 @@ namespace Biosis.BusinessLayer.Implementation
 
         public string CalcularMSGTrans(TransData dadoTrans)
         {
-            var HoP = Convert.ToDouble(dadoTrans.NumeroIndividuos) / (Convert.ToDouble(dadoTrans.NumeroIndividuos) + Convert.ToDouble(controle.NumeroIndividuos));
-            var HaP = 2 * Convert.ToDouble(dadoTrans.NumeroIndividuos) / (2 * Convert.ToDouble(dadoTrans.NumeroIndividuos) + Convert.ToDouble(controle.NumeroIndividuos));
+            var HoP = Convert.ToDouble(dadoTrans.PopulationNumber) / (Convert.ToDouble(dadoTrans.PopulationNumber) + Convert.ToDouble(controle.PopulationNumber));
+            var HaP = 2 * Convert.ToDouble(dadoTrans.PopulationNumber) / (2 * Convert.ToDouble(dadoTrans.PopulationNumber) + Convert.ToDouble(controle.PopulationNumber));
 
             var HoProb = 1 - Binomial.CDF(HoP, dadoTrans.MSG + controle.MSG, dadoTrans.MSG) + Binomial.PMF(HoP, dadoTrans.MSG + controle.MSG, dadoTrans.MSG);
 
@@ -94,8 +94,8 @@ namespace Biosis.BusinessLayer.Implementation
 
         public string CalcularMGTrans(TransData dadoTrans)
         {
-            var HoP = Convert.ToDouble(dadoTrans.NumeroIndividuos) / (Convert.ToDouble(dadoTrans.NumeroIndividuos) + Convert.ToDouble(controle.NumeroIndividuos));
-            var HaP = 2 * Convert.ToDouble(dadoTrans.NumeroIndividuos) / (2 * Convert.ToDouble(dadoTrans.NumeroIndividuos) + Convert.ToDouble(controle.NumeroIndividuos));
+            var HoP = Convert.ToDouble(dadoTrans.PopulationNumber) / (Convert.ToDouble(dadoTrans.PopulationNumber) + Convert.ToDouble(controle.PopulationNumber));
+            var HaP = 2 * Convert.ToDouble(dadoTrans.PopulationNumber) / (2 * Convert.ToDouble(dadoTrans.PopulationNumber) + Convert.ToDouble(controle.PopulationNumber));
 
             var HoProb = 1 - Binomial.CDF(HoP, dadoTrans.MG + controle.MG, dadoTrans.MG) + Binomial.PMF(HoP, dadoTrans.MG + controle.MG, dadoTrans.MG);
 
@@ -129,12 +129,12 @@ namespace Biosis.BusinessLayer.Implementation
 
         public string CalcularTotalTrans(TransData dadoTrans)
         {
-            var HoP = Convert.ToDouble(dadoTrans.NumeroIndividuos) / (Convert.ToDouble(dadoTrans.NumeroIndividuos) + Convert.ToDouble(controle.NumeroIndividuos));
-            var HaP = 2 * Convert.ToDouble(dadoTrans.NumeroIndividuos) / (2 * Convert.ToDouble(dadoTrans.NumeroIndividuos) + Convert.ToDouble(controle.NumeroIndividuos));
+            var HoP = Convert.ToDouble(dadoTrans.PopulationNumber) / (Convert.ToDouble(dadoTrans.PopulationNumber) + Convert.ToDouble(controle.PopulationNumber));
+            var HaP = 2 * Convert.ToDouble(dadoTrans.PopulationNumber) / (2 * Convert.ToDouble(dadoTrans.PopulationNumber) + Convert.ToDouble(controle.PopulationNumber));
 
-            var HoProb = 1 - Binomial.CDF(HoP, dadoTrans.TotalManchas + controle.TotalManchas, dadoTrans.TotalManchas) + Binomial.PMF(HoP, dadoTrans.TotalManchas + controle.TotalManchas, dadoTrans.TotalManchas);
+            var HoProb = 1 - Binomial.CDF(HoP, dadoTrans.TaintTotal + controle.TaintTotal, dadoTrans.TaintTotal) + Binomial.PMF(HoP, dadoTrans.TaintTotal + controle.TaintTotal, dadoTrans.TaintTotal);
 
-            var HaProb = Binomial.CDF(HaP, dadoTrans.TotalManchas + controle.TotalManchas, dadoTrans.TotalManchas);
+            var HaProb = Binomial.CDF(HaP, dadoTrans.TaintTotal + controle.TaintTotal, dadoTrans.TaintTotal);
 
             if (HoProb > 0.05 && HaProb <= 0.05)
             {
@@ -283,15 +283,15 @@ namespace Biosis.BusinessLayer.Implementation
 
             table.CompleteRow();
 
-            var itemCompostoControleCell = new PdfPCell(new Paragraph(controle.Composto, fontText));
+            var itemCompostoControleCell = new PdfPCell(new Paragraph(controle.Compound, fontText));
             itemCompostoControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             table.AddCell(itemCompostoControleCell);
 
-            var itemIndividuosControleCell = new PdfPCell(new Paragraph(Convert.ToString(controle.NumeroIndividuos), fontText));
+            var itemIndividuosControleCell = new PdfPCell(new Paragraph(Convert.ToString(controle.PopulationNumber), fontText));
             itemIndividuosControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             table.AddCell(itemIndividuosControleCell);
 
-            var itemMSPProportionControleCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(controle.MSP) / Convert.ToDouble(controle.NumeroIndividuos), 2)), fontText));
+            var itemMSPProportionControleCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(controle.MSP) / Convert.ToDouble(controle.PopulationNumber), 2)), fontText));
             itemMSPProportionControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             table.AddCell(itemMSPProportionControleCell);
 
@@ -301,7 +301,7 @@ namespace Biosis.BusinessLayer.Implementation
 
             table.AddCell("");
 
-            var itemMSGProportionControleCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(controle.MSG) / Convert.ToDouble(controle.NumeroIndividuos), 2)), fontText));
+            var itemMSGProportionControleCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(controle.MSG) / Convert.ToDouble(controle.PopulationNumber), 2)), fontText));
             itemMSGProportionControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             table.AddCell(itemMSGProportionControleCell);
 
@@ -311,7 +311,7 @@ namespace Biosis.BusinessLayer.Implementation
 
             table.AddCell("");
 
-            var itemMGProportionControleCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(controle.MG) / Convert.ToDouble(controle.NumeroIndividuos), 2)), fontText));
+            var itemMGProportionControleCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(controle.MG) / Convert.ToDouble(controle.PopulationNumber), 2)), fontText));
             itemMGProportionControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             table.AddCell(itemMGProportionControleCell);
 
@@ -321,11 +321,11 @@ namespace Biosis.BusinessLayer.Implementation
 
             table.AddCell("");
 
-            var itemTotalProportionControleCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(controle.TotalManchas) / Convert.ToDouble(controle.NumeroIndividuos), 2)), fontText));
+            var itemTotalProportionControleCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(controle.TaintTotal) / Convert.ToDouble(controle.PopulationNumber), 2)), fontText));
             itemTotalProportionControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             table.AddCell(itemTotalProportionControleCell);
 
-            var itemTotalNumberControleCell = new PdfPCell(new Paragraph(Convert.ToString(controle.TotalManchas), fontText));
+            var itemTotalNumberControleCell = new PdfPCell(new Paragraph(Convert.ToString(controle.TaintTotal), fontText));
             itemTotalNumberControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             table.AddCell(itemTotalNumberControleCell);
 
@@ -333,17 +333,15 @@ namespace Biosis.BusinessLayer.Implementation
 
             foreach (var item in research.TransData)
             {
-                composto = item.Composto;
-
-                var itemCompostoCell = new PdfPCell(new Paragraph(item.Composto, fontText));
+                var itemCompostoCell = new PdfPCell(new Paragraph(item.Compound, fontText));
                 itemCompostoCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemCompostoCell);
 
-                var itemIndividuosCell = new PdfPCell(new Paragraph(Convert.ToString(item.NumeroIndividuos), fontText));
+                var itemIndividuosCell = new PdfPCell(new Paragraph(Convert.ToString(item.PopulationNumber), fontText));
                 itemIndividuosCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemIndividuosCell);                
 
-                var itemMSPProportionCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(item.MSP)/Convert.ToDouble(item.NumeroIndividuos), 2)), fontText));
+                var itemMSPProportionCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(item.MSP)/Convert.ToDouble(item.PopulationNumber), 2)), fontText));
                 itemMSPProportionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemMSPProportionCell);
 
@@ -355,7 +353,7 @@ namespace Biosis.BusinessLayer.Implementation
                 itemDiagnosticoMSPCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemDiagnosticoMSPCell);                
 
-                var itemMSGProportionCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(item.MSG) / Convert.ToDouble(item.NumeroIndividuos), 2)), fontText));
+                var itemMSGProportionCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(item.MSG) / Convert.ToDouble(item.PopulationNumber), 2)), fontText));
                 itemMSGProportionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemMSGProportionCell);
 
@@ -367,7 +365,7 @@ namespace Biosis.BusinessLayer.Implementation
                 itemDiagnosticoMSGCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemDiagnosticoMSGCell);
 
-                var itemMGProportionCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(item.MG) / Convert.ToDouble(item.NumeroIndividuos), 2)), fontText));
+                var itemMGProportionCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(item.MG) / Convert.ToDouble(item.PopulationNumber), 2)), fontText));
                 itemMGProportionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemMGProportionCell);
 
@@ -379,11 +377,11 @@ namespace Biosis.BusinessLayer.Implementation
                 itemDiagnosticoMGCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemDiagnosticoMGCell);
 
-                var itemTotalProportionCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(item.TotalManchas) / Convert.ToDouble(item.NumeroIndividuos), 2)), fontText));
+                var itemTotalProportionCell = new PdfPCell(new Paragraph(Convert.ToString(Math.Round(Convert.ToDouble(item.TaintTotal) / Convert.ToDouble(item.PopulationNumber), 2)), fontText));
                 itemTotalProportionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemTotalProportionCell);
 
-                var itemTotalNumberCell = new PdfPCell(new Paragraph(Convert.ToString(item.TotalManchas), fontText));
+                var itemTotalNumberCell = new PdfPCell(new Paragraph(Convert.ToString(item.TaintTotal), fontText));
                 itemTotalNumberCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemTotalNumberCell);
 
@@ -394,7 +392,7 @@ namespace Biosis.BusinessLayer.Implementation
                 table.CompleteRow();
             }
 
-            document.Add(new Paragraph("Frequência de manchas mutantes observadas nos descendentes trans-heterozigotos de Drosophila melanogaster, do cruzamento padrão, tratados com diferentes concentrações de " + composto + ".\n\n"));
+            document.Add(new Paragraph("Frequência de manchas mutantes observadas nos descendentes trans-heterozigotos de Drosophila melanogaster, do cruzamento padrão, tratados com diferentes concentrações de " + research.Compound + ".\n\n"));
 
             document.Add(table);
             document.Close();
