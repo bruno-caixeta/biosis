@@ -162,6 +162,63 @@ namespace Biosis.BusinessLayer.Implementation
 
         }
 
+        public double CalculateTaintFrequency(TransData dadoTrans)
+        {
+            /*var controlClass1Frequency = Convert.ToDouble(controle.Class1 / controle.PopulationNumber);
+            var controlClass2Frequency = Convert.ToDouble(controle.Class2 / controle.PopulationNumber);
+            var controlClass3Frequency = Convert.ToDouble(controle.Class3 / controle.PopulationNumber);
+            var controlClass4Frequency = Convert.ToDouble(controle.Class4 / controle.PopulationNumber);
+            var controlClass5Frequency = Convert.ToDouble(controle.Class5 / controle.PopulationNumber);
+            var controlClass6Frequency = Convert.ToDouble(controle.Class6 / controle.PopulationNumber);
+            var controlClass7Frequency = Convert.ToDouble(controle.Class7 / controle.PopulationNumber);
+            var controlClass8Frequency = Convert.ToDouble(controle.Class8 / controle.PopulationNumber);
+            var controlClass9Frequency = Convert.ToDouble(controle.Class9 / controle.PopulationNumber);
+            var controlClass10Frequency = Convert.ToDouble(controle.Class10 / controle.PopulationNumber);
+
+            var controlFrequencySum = controlClass1Frequency + controlClass2Frequency + controlClass3Frequency + controlClass4Frequency + controlClass5Frequency + controlClass6Frequency + controlClass7Frequency + controlClass8Frequency + controlClass9Frequency + controlClass10Frequency;*/
+
+            var dadoTransClass1Frequency = Convert.ToDouble(dadoTrans.Class1 / dadoTrans.PopulationNumber);
+            var dadoTransClass2Frequency = Convert.ToDouble(dadoTrans.Class2 / dadoTrans.PopulationNumber);
+            var dadoTransClass3Frequency = Convert.ToDouble(dadoTrans.Class3 / dadoTrans.PopulationNumber);
+            var dadoTransClass4Frequency = Convert.ToDouble(dadoTrans.Class4 / dadoTrans.PopulationNumber);
+            var dadoTransClass5Frequency = Convert.ToDouble(dadoTrans.Class5 / dadoTrans.PopulationNumber);
+            var dadoTransClass6Frequency = Convert.ToDouble(dadoTrans.Class6 / dadoTrans.PopulationNumber);
+            var dadoTransClass7Frequency = Convert.ToDouble(dadoTrans.Class7 / dadoTrans.PopulationNumber);
+            var dadoTransClass8Frequency = Convert.ToDouble(dadoTrans.Class8 / dadoTrans.PopulationNumber);
+            var dadoTransClass9Frequency = Convert.ToDouble(dadoTrans.Class9 / dadoTrans.PopulationNumber);
+            var dadoTransClass10Frequency = Convert.ToDouble(dadoTrans.Class10 / dadoTrans.PopulationNumber);
+
+            var dadoTransFrequencySum = dadoTransClass1Frequency + dadoTransClass2Frequency + dadoTransClass3Frequency + dadoTransClass4Frequency + dadoTransClass5Frequency + dadoTransClass6Frequency + dadoTransClass7Frequency + dadoTransClass8Frequency + dadoTransClass9Frequency + dadoTransClass10Frequency;
+
+            var frequencyXClass1 = dadoTransClass1Frequency * 1;
+            var frequencyXClass2 = dadoTransClass2Frequency * 2;
+            var frequencyXClass3 = dadoTransClass3Frequency * 3;
+            var frequencyXClass4 = dadoTransClass4Frequency * 4;
+            var frequencyXClass5 = dadoTransClass5Frequency * 5;
+            var frequencyXClass6 = dadoTransClass6Frequency * 6;
+            var frequencyXClass7 = dadoTransClass7Frequency * 7;
+            var frequencyXClass8 = dadoTransClass8Frequency * 8;
+            var frequencyXClass9 = dadoTransClass9Frequency * 9;
+            var frequencyXClass10 = dadoTransClass10Frequency * 10;
+
+            var dadoTransSumFrequencyXClass = frequencyXClass1 + frequencyXClass2 + frequencyXClass3 + frequencyXClass4 + frequencyXClass5 + frequencyXClass6 + frequencyXClass7 + frequencyXClass8 + frequencyXClass9 + frequencyXClass10;
+
+            return dadoTransSumFrequencyXClass / dadoTransFrequencySum;
+
+        }
+
+        public double CalculateCloneInductionFrequencyWithoutCorrection(TransData dadoTrans)
+        {
+            return Convert.ToDouble(dadoTrans.TaintTotal / (dadoTrans.PopulationNumber * 48800) * 100000);
+        }
+
+        public double CalculateCloneInductionFrequencyWithCorrection(TransData dadoTrans)
+        {
+            var mediumSize = CalculateTaintFrequency(dadoTrans);
+            var cloneInductionFrequencyWithoutCorrection = CalculateCloneInductionFrequencyWithoutCorrection(dadoTrans);
+            return Convert.ToDouble(Math.Exp(mediumSize * Math.Log(2) / 4 * Convert.ToDouble(cloneInductionFrequencyWithoutCorrection)));
+        }
+
         public MemoryStream GeneratePdfReport(TransData controle, Research research)
         {
             this.controle = controle;
