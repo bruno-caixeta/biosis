@@ -28,6 +28,7 @@ namespace Biosis
             transData.Compound = file.Compound;
             transData.Breed = file.Breed;
             transData.Dose = file.Dose;
+            file.Base64 = file.Base64.Split(",")[1];
             var data = Convert.FromBase64String(file.Base64);
             File.WriteAllBytes("../AnalysisFile.txt", data);
             var lines = File.ReadAllLines("../AnalysisFile.txt");
