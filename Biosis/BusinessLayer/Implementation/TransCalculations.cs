@@ -164,19 +164,6 @@ namespace Biosis.BusinessLayer.Implementation
 
         public double CalculateTaintFrequency(TransData dadoTrans)
         {
-            /*var controlClass1Frequency = Convert.ToDouble(controle.Class1 / controle.PopulationNumber);
-            var controlClass2Frequency = Convert.ToDouble(controle.Class2 / controle.PopulationNumber);
-            var controlClass3Frequency = Convert.ToDouble(controle.Class3 / controle.PopulationNumber);
-            var controlClass4Frequency = Convert.ToDouble(controle.Class4 / controle.PopulationNumber);
-            var controlClass5Frequency = Convert.ToDouble(controle.Class5 / controle.PopulationNumber);
-            var controlClass6Frequency = Convert.ToDouble(controle.Class6 / controle.PopulationNumber);
-            var controlClass7Frequency = Convert.ToDouble(controle.Class7 / controle.PopulationNumber);
-            var controlClass8Frequency = Convert.ToDouble(controle.Class8 / controle.PopulationNumber);
-            var controlClass9Frequency = Convert.ToDouble(controle.Class9 / controle.PopulationNumber);
-            var controlClass10Frequency = Convert.ToDouble(controle.Class10 / controle.PopulationNumber);
-
-            var controlFrequencySum = controlClass1Frequency + controlClass2Frequency + controlClass3Frequency + controlClass4Frequency + controlClass5Frequency + controlClass6Frequency + controlClass7Frequency + controlClass8Frequency + controlClass9Frequency + controlClass10Frequency;*/
-
             var dadoTransClass1Frequency = Convert.ToDouble(dadoTrans.Class1 / dadoTrans.PopulationNumber);
             var dadoTransClass2Frequency = Convert.ToDouble(dadoTrans.Class2 / dadoTrans.PopulationNumber);
             var dadoTransClass3Frequency = Convert.ToDouble(dadoTrans.Class3 / dadoTrans.PopulationNumber);
@@ -223,7 +210,7 @@ namespace Biosis.BusinessLayer.Implementation
         {
             this.controle = controle;
             var composto = "";
-            document = new Document(PageSize.A4.Rotate());
+            document = new Document(PageSize.A3.Rotate());
             document.SetMargins(3, 2, 3, 2);
             MemoryStream memoryStream = new MemoryStream();
             PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
@@ -385,6 +372,9 @@ namespace Biosis.BusinessLayer.Implementation
             var itemTotalNumberControleCell = new PdfPCell(new Paragraph(Convert.ToString(controle.TaintTotal), fontText));
             itemTotalNumberControleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             table.AddCell(itemTotalNumberControleCell);
+            table.AddCell("");
+
+            table.AddCell(itemTotalNumberControleCell);
 
             table.CompleteRow();
 
@@ -438,13 +428,17 @@ namespace Biosis.BusinessLayer.Implementation
                 itemTotalProportionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemTotalProportionCell);
 
-                var itemTotalNumberCell = new PdfPCell(new Paragraph(Convert.ToString(item.TaintTotal), fontText));
+                var itemTotalNumberCell = new PdfPCell(new Paragraph(item.TaintTotal.ToString(), fontText));
                 itemTotalNumberCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemTotalNumberCell);
 
                 var itemDiagnosticoTotalCell = new PdfPCell(new Paragraph(CalcularTotalTrans(item)));
                 itemDiagnosticoTotalCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemDiagnosticoTotalCell);
+
+                var itemTaintTotalCell = new PdfPCell(new Paragraph(item.TaintTotal.ToString()));
+                itemTaintTotalCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                table.AddCell(itemTaintTotalCell);
 
                 table.CompleteRow();
             }
