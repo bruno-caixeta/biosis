@@ -20,7 +20,7 @@ namespace Biosis.Model
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("host=localhost;port=5433;database=Biosis;user id=postgres;password=postgres;Command Timeout=60");
+            optionsBuilder.UseNpgsql("host=localhost;port=5432;database=Biosis;user id=postgres;password=postgres;Command Timeout=60");
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Biosis.Controllers
         [HttpPost]
         public IActionResult Login(LoginDTO loginDTO)
         {
-            return Ok();
+            return Ok(loginDTO);
         }
     }
 }
