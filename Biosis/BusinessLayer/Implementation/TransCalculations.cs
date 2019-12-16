@@ -216,6 +216,7 @@ namespace Biosis.BusinessLayer.Implementation
             PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
             document.Open();
             PdfPTable table = new PdfPTable(15);
+            PdfPTable tableComplete = new PdfPTable(5);
             table.WidthPercentage = 90;
             Font fontHeader = FontFactory.GetFont(BaseFont.TIMES_ROMAN, 18);
             Font fontText = FontFactory.GetFont(BaseFont.TIMES_ROMAN, 12);
@@ -441,6 +442,65 @@ namespace Biosis.BusinessLayer.Implementation
                 table.AddCell(itemTaintTotalCell);
 
                 table.CompleteRow();
+            }
+
+            //Tabela Frequencia
+            tableComplete.AddCell("");
+
+            var frequencyTitle = new Paragraph("Frequência de indução de manchas");
+            var frequencyTitleCell = new PdfPCell(frequencyTitle);
+            frequencyTitleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            frequencyTitleCell.Colspan = 4;
+
+            tableComplete.AddCell("");
+
+            var frequencyTitleObs = new Paragraph("(por 10⁵ células por divisão celular)");
+            var frequencyTitleObsCell = new PdfPCell(frequencyTitleObs);
+            frequencyTitleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            frequencyTitleObsCell.Colspan = 4;
+
+            tableComplete.AddCell("");
+
+            var noCorrectionTitle = new Paragraph("S/ correção por tam.");
+            var noCorrectionTitleCell = new PdfPCell(noCorrectionTitle);
+            noCorrectionTitleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            noCorrectionTitleCell.Colspan = 2;
+
+            var withCorrectionTitle = new Paragraph("C/ correção por tam.");
+            var withCorrectionTitleCell = new PdfPCell(noCorrectionTitle);
+            withCorrectionTitleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            withCorrectionTitleCell.Colspan = 2;
+
+            tableComplete.AddCell("Genótipos");
+
+            var nc = new Paragraph("n/NC");
+            var ncCell = new PdfPCell(nc);
+            ncCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            ncCell.Colspan = 2;
+
+            var ncx2 = new Paragraph("(2ⁱ⁻²) X (n/NC)");
+            var ncx2Cell = new PdfPCell(ncx2);
+            ncx2Cell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            ncx2Cell.Colspan = 2;
+
+            tableComplete.AddCell(frequencyTitleCell);
+            tableComplete.AddCell(frequencyTitleObsCell);
+            tableComplete.AddCell(noCorrectionTitleCell);
+            tableComplete.AddCell(withCorrectionTitleCell);
+            tableComplete.AddCell(ncCell);
+            tableComplete.AddCell(ncx2Cell);
+
+            foreach (var item in research.TransData)
+            {
+                var itemCompostoCell = new PdfPCell(new Paragraph(item.Compound, fontText));
+                itemCompostoCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                tableComplete.AddCell(itemCompostoCell);
+
+                var itemFrequencyNoCorrectionCell = new PdfPCell(new Paragraph(Convert.ToString(CalculateCloneInductionFrequencyWithoutCorrection(item))));
+                itemFrequencyNoCorrectionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                tableComplete.AddCell(itemFrequencyNoCorrectionCell);
+
+
             }
 
             document.Add(new Paragraph("Frequência de manchas mutantes observadas nos descendentes trans-heterozigotos de Drosophila melanogaster, do cruzamento padrão, tratados com diferentes concentrações de " + research.Compound + ".\n\n"));
