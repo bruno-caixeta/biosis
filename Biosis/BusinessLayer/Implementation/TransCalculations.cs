@@ -500,12 +500,20 @@ namespace Biosis.BusinessLayer.Implementation
                 itemFrequencyNoCorrectionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 tableComplete.AddCell(itemFrequencyNoCorrectionCell);
 
+                tableComplete.AddCell("");
+
+                var itemFrequencyWithCorrectionCell = new PdfPCell(new Paragraph(Convert.ToString(CalculateCloneInductionFrequencyWithCorrection(item))));
+                itemFrequencyWithCorrectionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                tableComplete.AddCell(itemFrequencyWithCorrectionCell);
+
+                tableComplete.AddCell("");
 
             }
 
             document.Add(new Paragraph("Frequência de manchas mutantes observadas nos descendentes trans-heterozigotos de Drosophila melanogaster, do cruzamento padrão, tratados com diferentes concentrações de " + research.Compound + ".\n\n"));
 
             document.Add(table);
+            document.Add(tableComplete);
             document.Close();
             return memoryStream;
         }
