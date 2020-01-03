@@ -162,18 +162,71 @@ namespace Biosis.BusinessLayer.Implementation
 
         }
 
+        public double CalculateTaintFrequencyCorrection(TransData dadoTrans)
+        {
+            var controlClass1Frequency = Convert.ToDouble((float)controle.Class1 / controle.PopulationNumber);
+            var controlClass2Frequency = Convert.ToDouble((float)controle.Class2 / controle.PopulationNumber);
+            var controlClass3Frequency = Convert.ToDouble((float)controle.Class3 / controle.PopulationNumber);
+            var controlClass4Frequency = Convert.ToDouble((float)controle.Class4 / controle.PopulationNumber);
+            var controlClass5Frequency = Convert.ToDouble((float)controle.Class5 / controle.PopulationNumber);
+            var controlClass6Frequency = Convert.ToDouble((float)controle.Class6 / controle.PopulationNumber);
+            var controlClass7Frequency = Convert.ToDouble((float)controle.Class7 / controle.PopulationNumber);
+            var controlClass8Frequency = Convert.ToDouble((float)controle.Class8 / controle.PopulationNumber);
+            var controlClass9Frequency = Convert.ToDouble((float)controle.Class9 / controle.PopulationNumber);
+            var controlClass10Frequency = Convert.ToDouble((float)controle.Class10 / controle.PopulationNumber);
+
+            var dadoTransClass1Frequency = Convert.ToDouble((float)dadoTrans.Class1 / dadoTrans.PopulationNumber);
+            var dadoTransClass2Frequency = Convert.ToDouble((float)dadoTrans.Class2 / dadoTrans.PopulationNumber);
+            var dadoTransClass3Frequency = Convert.ToDouble((float)dadoTrans.Class3 / dadoTrans.PopulationNumber);
+            var dadoTransClass4Frequency = Convert.ToDouble((float)dadoTrans.Class4 / dadoTrans.PopulationNumber);
+            var dadoTransClass5Frequency = Convert.ToDouble((float)dadoTrans.Class5 / dadoTrans.PopulationNumber);
+            var dadoTransClass6Frequency = Convert.ToDouble((float)dadoTrans.Class6 / dadoTrans.PopulationNumber);
+            var dadoTransClass7Frequency = Convert.ToDouble((float)dadoTrans.Class7 / dadoTrans.PopulationNumber);
+            var dadoTransClass8Frequency = Convert.ToDouble((float)dadoTrans.Class8 / dadoTrans.PopulationNumber);
+            var dadoTransClass9Frequency = Convert.ToDouble((float)dadoTrans.Class9 / dadoTrans.PopulationNumber);
+            var dadoTransClass10Frequency = Convert.ToDouble((float)dadoTrans.Class10 / dadoTrans.PopulationNumber);
+
+            var correctionClass1Frequency = Convert.ToDouble((float)dadoTransClass1Frequency - controlClass1Frequency);
+            var correctionClass2Frequency = Convert.ToDouble((float)dadoTransClass2Frequency - controlClass2Frequency);
+            var correctionClass3Frequency = Convert.ToDouble((float)dadoTransClass3Frequency - controlClass3Frequency);
+            var correctionClass4Frequency = Convert.ToDouble((float)dadoTransClass4Frequency - controlClass4Frequency);
+            var correctionClass5Frequency = Convert.ToDouble((float)dadoTransClass5Frequency - controlClass5Frequency);
+            var correctionClass6Frequency = Convert.ToDouble((float)dadoTransClass6Frequency - controlClass6Frequency);
+            var correctionClass7Frequency = Convert.ToDouble((float)dadoTransClass7Frequency - controlClass7Frequency);
+            var correctionClass8Frequency = Convert.ToDouble((float)dadoTransClass8Frequency - controlClass8Frequency);
+            var correctionClass9Frequency = Convert.ToDouble((float)dadoTransClass9Frequency - controlClass9Frequency);
+            var correctionClass10Frequency = Convert.ToDouble((float)dadoTransClass10Frequency - controlClass10Frequency);
+
+            var correctionFrequencySum = correctionClass1Frequency + correctionClass2Frequency + correctionClass3Frequency + correctionClass4Frequency + correctionClass5Frequency + correctionClass6Frequency + correctionClass7Frequency + correctionClass8Frequency + correctionClass9Frequency + correctionClass10Frequency;
+
+            var frequencyXClass1 = correctionClass1Frequency * 1;
+            var frequencyXClass2 = correctionClass2Frequency * 2;
+            var frequencyXClass3 = correctionClass3Frequency * 3;
+            var frequencyXClass4 = correctionClass4Frequency * 4;
+            var frequencyXClass5 = correctionClass5Frequency * 5;
+            var frequencyXClass6 = correctionClass6Frequency * 6;
+            var frequencyXClass7 = correctionClass7Frequency * 7;
+            var frequencyXClass8 = correctionClass8Frequency * 8;
+            var frequencyXClass9 = correctionClass9Frequency * 9;
+            var frequencyXClass10 = correctionClass10Frequency * 10;
+
+            var correctionFrequencyXClassSum = frequencyXClass1 + frequencyXClass2 + frequencyXClass3 + frequencyXClass4 + frequencyXClass5 + frequencyXClass6 + frequencyXClass7 + frequencyXClass8 + frequencyXClass9 + frequencyXClass10;
+
+            return correctionFrequencyXClassSum / correctionFrequencySum;
+        }
+
         public double CalculateTaintFrequency(TransData dadoTrans)
         {
-            var dadoTransClass1Frequency = Convert.ToDouble(dadoTrans.Class1 / dadoTrans.PopulationNumber);
-            var dadoTransClass2Frequency = Convert.ToDouble(dadoTrans.Class2 / dadoTrans.PopulationNumber);
-            var dadoTransClass3Frequency = Convert.ToDouble(dadoTrans.Class3 / dadoTrans.PopulationNumber);
-            var dadoTransClass4Frequency = Convert.ToDouble(dadoTrans.Class4 / dadoTrans.PopulationNumber);
-            var dadoTransClass5Frequency = Convert.ToDouble(dadoTrans.Class5 / dadoTrans.PopulationNumber);
-            var dadoTransClass6Frequency = Convert.ToDouble(dadoTrans.Class6 / dadoTrans.PopulationNumber);
-            var dadoTransClass7Frequency = Convert.ToDouble(dadoTrans.Class7 / dadoTrans.PopulationNumber);
-            var dadoTransClass8Frequency = Convert.ToDouble(dadoTrans.Class8 / dadoTrans.PopulationNumber);
-            var dadoTransClass9Frequency = Convert.ToDouble(dadoTrans.Class9 / dadoTrans.PopulationNumber);
-            var dadoTransClass10Frequency = Convert.ToDouble(dadoTrans.Class10 / dadoTrans.PopulationNumber);
+            var dadoTransClass1Frequency = Convert.ToDouble((float)dadoTrans.Class1 / dadoTrans.PopulationNumber);
+            var dadoTransClass2Frequency = Convert.ToDouble((float)dadoTrans.Class2 / dadoTrans.PopulationNumber);
+            var dadoTransClass3Frequency = Convert.ToDouble((float)dadoTrans.Class3 / dadoTrans.PopulationNumber);
+            var dadoTransClass4Frequency = Convert.ToDouble((float)dadoTrans.Class4 / dadoTrans.PopulationNumber);
+            var dadoTransClass5Frequency = Convert.ToDouble((float)dadoTrans.Class5 / dadoTrans.PopulationNumber);
+            var dadoTransClass6Frequency = Convert.ToDouble((float)dadoTrans.Class6 / dadoTrans.PopulationNumber);
+            var dadoTransClass7Frequency = Convert.ToDouble((float)dadoTrans.Class7 / dadoTrans.PopulationNumber);
+            var dadoTransClass8Frequency = Convert.ToDouble((float)dadoTrans.Class8 / dadoTrans.PopulationNumber);
+            var dadoTransClass9Frequency = Convert.ToDouble((float)dadoTrans.Class9 / dadoTrans.PopulationNumber);
+            var dadoTransClass10Frequency = Convert.ToDouble((float)dadoTrans.Class10 / dadoTrans.PopulationNumber);
 
             var dadoTransFrequencySum = dadoTransClass1Frequency + dadoTransClass2Frequency + dadoTransClass3Frequency + dadoTransClass4Frequency + dadoTransClass5Frequency + dadoTransClass6Frequency + dadoTransClass7Frequency + dadoTransClass8Frequency + dadoTransClass9Frequency + dadoTransClass10Frequency;
 
@@ -196,14 +249,14 @@ namespace Biosis.BusinessLayer.Implementation
 
         public double CalculateCloneInductionFrequencyWithoutCorrection(TransData dadoTrans)
         {
-            return Convert.ToDouble(dadoTrans.TaintTotal / (dadoTrans.PopulationNumber * 48800) * 100000);
+            return Convert.ToDouble(dadoTrans.TaintTotal / ((float)dadoTrans.PopulationNumber * 48800) * 100000);
         }
 
         public double CalculateCloneInductionFrequencyWithCorrection(TransData dadoTrans)
         {
             var mediumSize = CalculateTaintFrequency(dadoTrans);
             var cloneInductionFrequencyWithoutCorrection = CalculateCloneInductionFrequencyWithoutCorrection(dadoTrans);
-            return Convert.ToDouble(Math.Exp(mediumSize * Math.Log(2) / 4 * Convert.ToDouble(cloneInductionFrequencyWithoutCorrection)));
+            return Convert.ToDouble(Math.Exp(mediumSize * Math.Log(2) / 4 * (float)cloneInductionFrequencyWithoutCorrection));
         }
 
         public MemoryStream GeneratePdfReport(TransData controle, Research research)
@@ -215,9 +268,10 @@ namespace Biosis.BusinessLayer.Implementation
             MemoryStream memoryStream = new MemoryStream();
             PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
             document.Open();
-            PdfPTable table = new PdfPTable(15);
+            PdfPTable table = new PdfPTable(17);
             PdfPTable tableComplete = new PdfPTable(5);
             table.WidthPercentage = 90;
+            tableComplete.WidthPercentage = 40;
             Font fontHeader = FontFactory.GetFont(BaseFont.TIMES_ROMAN, 18);
             Font fontText = FontFactory.GetFont(BaseFont.TIMES_ROMAN, 12);
             Font fontItalic = FontFactory.GetFont(BaseFont.TIMES_ROMAN, 12, Font.ITALIC);
@@ -293,10 +347,33 @@ namespace Biosis.BusinessLayer.Implementation
             tmCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             tmCell.Colspan = 3;
 
+            var media = new Paragraph("Media das");
+            var mediaCell = new PdfPCell(media);
+            mediaCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            mediaCell.Colspan = 2;
+
+            var classTam = new Paragraph("classes de tam.");
+            var classTamCell = new PdfPCell(classTam);
+            classTamCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            classTamCell.Colspan = 2;
+
+            var clonesMwh = new Paragraph("clones mwh");
+            var clonesMwhCell = new PdfPCell(clonesMwh);
+            clonesMwhCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            clonesMwhCell.Colspan = 2;
+
+            var i = new Paragraph("(î)");
+            var iCell = new PdfPCell(i);
+            iCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            iCell.Colspan = 2;
+
+
             table.AddCell("Genótipos");
             table.AddCell("N. de");
             table.AddCell(headerExplanationCell);
             table.AddCell("Total");
+            table.AddCell(mediaCell);
+            
 
             table.AddCell("e Conc.");
             table.AddCell("Indiv.");
@@ -305,6 +382,7 @@ namespace Biosis.BusinessLayer.Implementation
             table.AddCell(mgCell);
             table.AddCell(tmCell);
             table.AddCell("manchas");
+            table.AddCell(classTamCell);
 
             table.AddCell(headerCell1);
             table.AddCell(headerCell2);
@@ -313,6 +391,7 @@ namespace Biosis.BusinessLayer.Implementation
             table.AddCell(headerCellempty);
             table.AddCell(headerCellempty);
             table.AddCell(headerCell5);
+            table.AddCell(clonesMwhCell);
 
             table.AddCell(headerCellempty2);
             table.AddCell(headerCellempty2);
@@ -321,6 +400,7 @@ namespace Biosis.BusinessLayer.Implementation
             table.AddCell(headerCell7);
             table.AddCell(headerCell6);
             table.AddCell(headerCell8);
+            table.AddCell(iCell);
 
             var flairCell = new PdfPCell(new Paragraph("mwh/flr³", fontItalic));
             flairCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
@@ -376,6 +456,10 @@ namespace Biosis.BusinessLayer.Implementation
             table.AddCell("");
 
             table.AddCell(itemTotalNumberControleCell);
+
+            var itemTaintFrequencyControlCell = new PdfPCell(new Paragraph(CalculateTaintFrequency(controle).ToString("n2")));
+            itemTaintFrequencyControlCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            table.AddCell(itemTaintFrequencyControlCell);
 
             table.CompleteRow();
 
@@ -441,25 +525,28 @@ namespace Biosis.BusinessLayer.Implementation
                 itemTaintTotalCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 table.AddCell(itemTaintTotalCell);
 
+                var itemTaintFrequency = new PdfPCell(new Paragraph(CalculateTaintFrequency(item).ToString("n2")));
+                itemTaintFrequency.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                table.AddCell(itemTaintFrequency);
+
+                var itemTaintCorrectionFrequency = new PdfPCell(new Paragraph("{" + CalculateTaintFrequencyCorrection(item).ToString("n2") + "}"));
+                itemTaintCorrectionFrequency.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                table.AddCell(itemTaintCorrectionFrequency);
+
                 table.CompleteRow();
             }
 
             //Tabela Frequencia
-            tableComplete.AddCell("");
 
             var frequencyTitle = new Paragraph("Frequência de indução de manchas");
             var frequencyTitleCell = new PdfPCell(frequencyTitle);
             frequencyTitleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             frequencyTitleCell.Colspan = 4;
 
-            tableComplete.AddCell("");
-
             var frequencyTitleObs = new Paragraph("(por 10⁵ células por divisão celular)");
             var frequencyTitleObsCell = new PdfPCell(frequencyTitleObs);
             frequencyTitleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             frequencyTitleObsCell.Colspan = 4;
-
-            tableComplete.AddCell("");
 
             var noCorrectionTitle = new Paragraph("S/ correção por tam.");
             var noCorrectionTitleCell = new PdfPCell(noCorrectionTitle);
@@ -467,7 +554,7 @@ namespace Biosis.BusinessLayer.Implementation
             noCorrectionTitleCell.Colspan = 2;
 
             var withCorrectionTitle = new Paragraph("C/ correção por tam.");
-            var withCorrectionTitleCell = new PdfPCell(noCorrectionTitle);
+            var withCorrectionTitleCell = new PdfPCell(withCorrectionTitle);
             withCorrectionTitleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             withCorrectionTitleCell.Colspan = 2;
 
@@ -484,9 +571,12 @@ namespace Biosis.BusinessLayer.Implementation
             ncx2Cell.Colspan = 2;
 
             tableComplete.AddCell(frequencyTitleCell);
+            tableComplete.AddCell("");
             tableComplete.AddCell(frequencyTitleObsCell);
+            tableComplete.AddCell("");
             tableComplete.AddCell(noCorrectionTitleCell);
             tableComplete.AddCell(withCorrectionTitleCell);
+            tableComplete.AddCell("");
             tableComplete.AddCell(ncCell);
             tableComplete.AddCell(ncx2Cell);
 
@@ -496,13 +586,13 @@ namespace Biosis.BusinessLayer.Implementation
                 itemCompostoCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 tableComplete.AddCell(itemCompostoCell);
 
-                var itemFrequencyNoCorrectionCell = new PdfPCell(new Paragraph(Convert.ToString(CalculateCloneInductionFrequencyWithoutCorrection(item))));
+                var itemFrequencyNoCorrectionCell = new PdfPCell(new Paragraph(CalculateCloneInductionFrequencyWithoutCorrection(item).ToString("n2")));
                 itemFrequencyNoCorrectionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 tableComplete.AddCell(itemFrequencyNoCorrectionCell);
 
                 tableComplete.AddCell("");
 
-                var itemFrequencyWithCorrectionCell = new PdfPCell(new Paragraph(Convert.ToString(CalculateCloneInductionFrequencyWithCorrection(item))));
+                var itemFrequencyWithCorrectionCell = new PdfPCell(new Paragraph(CalculateCloneInductionFrequencyWithCorrection(item).ToString("n2")));
                 itemFrequencyWithCorrectionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 tableComplete.AddCell(itemFrequencyWithCorrectionCell);
 
