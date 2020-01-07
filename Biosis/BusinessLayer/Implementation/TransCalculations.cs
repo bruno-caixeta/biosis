@@ -162,6 +162,31 @@ namespace Biosis.BusinessLayer.Implementation
 
         }
 
+        public double CalculateTaintInductionFrequencyWithoutCorrectionBySizeAndCorrectionOnData(TransData dadoTrans)
+        {
+            var taintNumberClass1 = dadoTrans.Class1 - (controle.Class1 * dadoTrans.PopulationNumber / controle.PopulationNumber);
+            var taintNumberClass2 = dadoTrans.Class2 - (controle.Class2 * dadoTrans.PopulationNumber / controle.PopulationNumber);
+            var taintNumberClass3 = dadoTrans.Class3 - (controle.Class3 * dadoTrans.PopulationNumber / controle.PopulationNumber);
+            var taintNumberClass4 = dadoTrans.Class4 - (controle.Class4 * dadoTrans.PopulationNumber / controle.PopulationNumber);
+            var taintNumberClass5 = dadoTrans.Class5 - (controle.Class5 * dadoTrans.PopulationNumber / controle.PopulationNumber);
+            var taintNumberClass6 = dadoTrans.Class6 - (controle.Class6 * dadoTrans.PopulationNumber / controle.PopulationNumber);
+            var taintNumberClass7 = dadoTrans.Class7 - (controle.Class7 * dadoTrans.PopulationNumber / controle.PopulationNumber);
+            var taintNumberClass8 = dadoTrans.Class8 - (controle.Class8 * dadoTrans.PopulationNumber / controle.PopulationNumber);
+            var taintNumberClass9 = dadoTrans.Class9 - (controle.Class9 * dadoTrans.PopulationNumber / controle.PopulationNumber);
+            var taintNumberClass10 = dadoTrans.Class10 - (controle.Class10 * dadoTrans.PopulationNumber / controle.PopulationNumber);
+
+            var taintNumberTotal = taintNumberClass1 + taintNumberClass2 + taintNumberClass3 + taintNumberClass4 + taintNumberClass5 + taintNumberClass6 + taintNumberClass7 + taintNumberClass8 + taintNumberClass9 + taintNumberClass10;
+
+            return Convert.ToDouble(taintNumberTotal / ((float)dadoTrans.PopulationNumber * 48800) * 100000);
+        }
+
+        public double CalculateTaintInductionFrequencyWithCorrectionBySizeAndCorrectionOnData(TransData dadoTrans)
+        {
+            var mediumSize = CalculateTaintFrequency(dadoTrans);
+            var cloneInductionFrequencyWithCorrection = CalculateTaintInductionFrequencyWithoutCorrectionBySizeAndCorrectionOnData(dadoTrans);
+            return Convert.ToDouble(Math.Exp(mediumSize * Math.Log(2) / 4 * (float)cloneInductionFrequencyWithCorrection));
+        }
+
         public double CalculateTaintFrequencyCorrection(TransData dadoTrans)
         {
             var controlClass1Frequency = Convert.ToDouble((float)controle.Class1 / controle.PopulationNumber);
@@ -322,7 +347,7 @@ namespace Biosis.BusinessLayer.Implementation
             var headerCell8 = new PdfPCell(n);
             headerCell8.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
 
-            var headerExplanation = new Paragraph("Manchas por indivíduo ( no. de manchas ) diag. estatístico");
+            var headerExplanation = new Paragraph("Manchas por indivíduo ( no. de manchas ) diag. estatísticoᵃ");
             var headerExplanationCell = new PdfPCell(headerExplanation);
             headerExplanationCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             headerExplanationCell.Colspan = 12;
@@ -545,7 +570,7 @@ namespace Biosis.BusinessLayer.Implementation
 
             var frequencyTitleObs = new Paragraph("(por 10⁵ células por divisão celular)");
             var frequencyTitleObsCell = new PdfPCell(frequencyTitleObs);
-            frequencyTitleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            frequencyTitleObsCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             frequencyTitleObsCell.Colspan = 4;
 
             var noCorrectionTitle = new Paragraph("S/ correção por tam.");
@@ -590,19 +615,24 @@ namespace Biosis.BusinessLayer.Implementation
                 itemFrequencyNoCorrectionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 tableComplete.AddCell(itemFrequencyNoCorrectionCell);
 
-                tableComplete.AddCell("");
+                var itemFrequencyCorrectionOnDataCell = new PdfPCell(new Paragraph("{" + CalculateTaintInductionFrequencyWithoutCorrectionBySizeAndCorrectionOnData(item).ToString("n2") + "}"));
+                itemFrequencyCorrectionOnDataCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                tableComplete.AddCell(itemFrequencyCorrectionOnDataCell);
 
                 var itemFrequencyWithCorrectionCell = new PdfPCell(new Paragraph(CalculateCloneInductionFrequencyWithCorrection(item).ToString("n2")));
                 itemFrequencyWithCorrectionCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
                 tableComplete.AddCell(itemFrequencyWithCorrectionCell);
 
-                tableComplete.AddCell("");
+                var itemFrequencyWithCorrectionAndOnDataCell = new PdfPCell(new Paragraph("{" + CalculateTaintInductionFrequencyWithCorrectionBySizeAndCorrectionOnData(item).ToString("n2") + "}"));
+                itemFrequencyWithCorrectionAndOnDataCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                tableComplete.AddCell(itemFrequencyWithCorrectionAndOnDataCell);
 
             }
 
             document.Add(new Paragraph("Frequência de manchas mutantes observadas nos descendentes trans-heterozigotos de Drosophila melanogaster, do cruzamento padrão, tratados com diferentes concentrações de " + research.Compound + ".\n\n"));
 
             document.Add(table);
+            document.Add(Chunk.NEWLINE);
             document.Add(tableComplete);
             document.Close();
             return memoryStream;
