@@ -301,16 +301,36 @@ namespace Biosis.BusinessLayer.Implementation
             Font fontText = FontFactory.GetFont(BaseFont.TIMES_ROMAN, 12);
             Font fontItalic = FontFactory.GetFont(BaseFont.TIMES_ROMAN, 12, Font.ITALIC);
 
+            Font small = new Font(Font.FontFamily.HELVETICA, 6);
+            Chunk a = new Chunk("a", small);
+            a.SetTextRise(7);
+            Chunk b = new Chunk("b", small);
+            b.SetTextRise(7);
+            Chunk c = new Chunk("c", small);
+            c.SetTextRise(7);
+            Chunk d = new Chunk("d", small);
+            d.SetTextRise(7);
+            Chunk e = new Chunk("e", small);
+            e.SetTextRise(7);
+            Chunk f = new Chunk("f", small);
+            f.SetTextRise(7);
+            Chunk comma = new Chunk(",", small);
+            comma.SetTextRise(7);
+
             Paragraph column1 = new Paragraph("(mM)", fontHeader);
             Paragraph column2 = new Paragraph("( N )", fontHeader);
-            Paragraph column3 = new Paragraph("(1-2 céls)b", fontHeader);
-            Paragraph column4 = new Paragraph("(>2 céls)b", fontHeader);
-            Paragraph column5 = new Paragraph("mwhc", fontHeader);
+            Paragraph column3 = new Paragraph("(1-2 céls)", fontHeader);
+            column3.Add(b);
+            Paragraph column4 = new Paragraph("(>2 céls)", fontHeader);
+            column4.Add(b);
+            Paragraph column5 = new Paragraph("mwh", fontHeader);
+            column5.Add(c);
             Paragraph m2 = new Paragraph("M = 2", fontHeader);
             Paragraph m5 = new Paragraph("M = 5", fontHeader);
             Paragraph n = new Paragraph("( n )", fontHeader);
             Paragraph controleParagraph = new Paragraph("Controle", fontText);
             Paragraph emptyParagraph = new Paragraph("");
+            
 
             var headerCell1 = new PdfPCell(column1);
             headerCell1.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
@@ -347,7 +367,8 @@ namespace Biosis.BusinessLayer.Implementation
             var headerCell8 = new PdfPCell(n);
             headerCell8.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
 
-            var headerExplanation = new Paragraph("Manchas por indivíduo ( no. de manchas ) diag. estatísticoᵃ");
+            var headerExplanation = new Paragraph("Manchas por indivíduo ( no. de manchas ) diag. estatístico");
+            headerExplanation.Add(a);
             var headerExplanationCell = new PdfPCell(headerExplanation);
             headerExplanationCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             headerExplanationCell.Colspan = 12;
@@ -383,6 +404,9 @@ namespace Biosis.BusinessLayer.Implementation
             classTamCell.Colspan = 2;
 
             var clonesMwh = new Paragraph("clones mwh");
+            clonesMwh.Add(c);
+            clonesMwh.Add(comma);
+            clonesMwh.Add(d);
             var clonesMwhCell = new PdfPCell(clonesMwh);
             clonesMwhCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             clonesMwhCell.Colspan = 2;
@@ -569,16 +593,23 @@ namespace Biosis.BusinessLayer.Implementation
             frequencyTitleCell.Colspan = 4;
 
             var frequencyTitleObs = new Paragraph("(por 10⁵ células por divisão celular)");
+            frequencyTitleObs.Add(f);
             var frequencyTitleObsCell = new PdfPCell(frequencyTitleObs);
             frequencyTitleObsCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             frequencyTitleObsCell.Colspan = 4;
 
             var noCorrectionTitle = new Paragraph("S/ correção por tam.");
+            noCorrectionTitle.Add(d);
+            noCorrectionTitle.Add(comma);
+            noCorrectionTitle.Add(e);
             var noCorrectionTitleCell = new PdfPCell(noCorrectionTitle);
             noCorrectionTitleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             noCorrectionTitleCell.Colspan = 2;
 
             var withCorrectionTitle = new Paragraph("C/ correção por tam.");
+            withCorrectionTitle.Add(d);
+            withCorrectionTitle.Add(comma);
+            withCorrectionTitle.Add(e);
             var withCorrectionTitleCell = new PdfPCell(withCorrectionTitle);
             withCorrectionTitleCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             withCorrectionTitleCell.Colspan = 2;
@@ -634,6 +665,38 @@ namespace Biosis.BusinessLayer.Implementation
             document.Add(table);
             document.Add(Chunk.NEWLINE);
             document.Add(tableComplete);
+            document.Add(Chunk.NEWLINE);
+            
+            Paragraph obsA = new Paragraph();
+            obsA.Add(a);
+            obsA.Add("Diagnóstico estatístico de acordo com Frei e Würgler (1988): +, positivo; -, negativo; i, inconclusivo. m, fator de multiplicação para a avaliação de resultados significativamente negativos. Níveis de significância α = β = 0,05.");
+            document.Add(obsA);
+
+            Paragraph obsB = new Paragraph();
+            obsB.Add(b);
+            obsB.Add("Incluindo manchas simples flr³ raras.");
+            document.Add(obsB);
+
+            Paragraph obsC = new Paragraph();
+            obsC.Add(c);
+            obsC.Add("Considerando os clones mwh para as manchas simples mwh e para as manchas gêmeas.");
+            document.Add(obsC);
+
+            Paragraph obsD = new Paragraph();
+            obsD.Add(d);
+            obsD.Add("Números entre chaves são as freqüências de indução corrigidas em relação a incidência espontânea estimada do controle negativo.");
+            document.Add(obsD);
+
+            Paragraph obsE = new Paragraph();
+            obsE.Add(e);
+            obsE.Add("C = 48.000, isto é, número aproximado de células examinadas por indivíduo.");
+            document.Add(obsE);
+
+            Paragraph obsF = new Paragraph();
+            obsF.Add(f);
+            obsF.Add("Calculado de acordo com Frei et al. (1992).");
+            document.Add(obsF);
+            document.Add(new Paragraph("*Apenas manchas simples mwh podem ser observadas nos indivíduos heterozigotos mwh/TM3, já que o cromossomo balanceador TM3 não contém o gene mutante flr³."));
             document.Close();
             return memoryStream;
         }
