@@ -1,4 +1,5 @@
-﻿using Biosis.BusinessLayer.Interface;
+﻿using BCrypt;
+using Biosis.BusinessLayer.Interface;
 using Biosis.DataObject;
 using Biosis.Model;
 using Biosis.Model.Repository.Interface;
@@ -28,6 +29,11 @@ namespace Biosis.BusinessLayer.Implementation
         public User GetUser(Guid idUser)
         {
             return _userRepository.GetOne(idUser);
+        }
+
+        public bool Login(LoginDTO login, User user)
+        {
+            return BCrypt.Net.BCrypt.Verify(login.Password, user.Password);
         }
     }
 }

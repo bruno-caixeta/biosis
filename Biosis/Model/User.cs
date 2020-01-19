@@ -1,4 +1,5 @@
-﻿using Biosis.DataObject;
+﻿using BCrypt;
+using Biosis.DataObject;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -27,7 +28,7 @@ namespace Biosis.Model
         {
             Name = userDTO.Name;
             Login = userDTO.Login;
-            Password = userDTO.Password;
+            Password = BCrypt.Net.BCrypt.HashPassword(userDTO.Password, BCrypt.Net.BCrypt.GenerateSalt(12));
         }
     }
 }

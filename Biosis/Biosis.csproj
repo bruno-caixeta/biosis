@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net" Version="0.1.0" />
     <PackageReference Include="iTextSharp" Version="5.5.13.1" />
     <PackageReference Include="MathNet.Numerics" Version="4.8.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
